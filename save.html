@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save and Load Storage</title>
+</head>
+<body style="background-color:lightblue;">
+<div style="display:block;margin:10px 20px;;">
+    <h1>Save and Load Storage Page</h1>
+    <form style="margin:10px;">
+        <label style="font-style: bold;margin:10px;"><b>Name:</b></label>
+        <br>
+        <input type="text" placeholder="Enter Name" style="margin:5px;"/>
+        <br>
+        <label style="font-style: bold;margin:10px;"><b>Age:</b></label>
+        <br>
+        <input type="number" placeholder="Enter Age" style="margin:5px;"/>
+        <br>
+        <button onclick="save()"style="margin:5px;padding:10px;">Save</button>
+        <br>
+        <button onclick="load()"style="margin:5px;padding:10px;">Load</button>
+    </form>
+    </div>
+</body>
+<script>
+    function save(){
+        alert("Data Saved!");
+    }
+    function load(){
+        alert("Data Loaded!");
+    }
+</script>
+</html>
