@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlickFinder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      color: #1dbf73;
+      font-family:'Brush', cursive;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .categories button {
+      background-color: #0c3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .search-box input {
+      width: 50%;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+
+    .movie-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .movie-card {
+      background: #444;
+      width: 180px;
+      border-radius: 15px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .movie-card .poster {
+      width: 100%;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .movie-card p {
+      padding: 10px;
+    }
+
+    .scroll-carousel-container {
+      position: relative;
+      width: 90%;
+      margin: 2rem auto;
+      overflow: hidden;
+    }
+
+    .scroll-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .scroll-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-item {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 400px;
+      height: 250px;
+      margin-right: 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .scroll-left {
+      left: 0;
+    }
+
+    .scroll-right {
+      right: 0;
+    }
+
+    .faq-section {
+      padding: 20px;
+      width: 80%;
+      margin: auto;
+    }
+
+    .faq-item {
+      background: #333;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .faq-item p {
+      display: none;
+      color: #1dbf73;
+      margin-top: 5px;
+    }
+
+    .faq-item.active p {
+      display: block;
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    footer div {
+      flex: 1 1 200px;
+      margin: 10px;
+    }
+
+    footer h4 {
+      color: #1dbf73;
+      margin-bottom: 10px;
+    }
+
+    footer input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    footer button {
+      background: #1dbf73;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>MOVIE LIST</h2>
+
+<div class="categories">
+  <button onclick="filterMovies('action')">Action</button>
+  <button onclick="filterMovies('comedy')">Comedy</button>
+  <button onclick="filterMovies('thriller')">Thriller</button>
+  <button onclick="filterMovies('horror')">Horror</button>
+</div>
+
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search here..." oninput="searchMovies()" />
+</div>
+
+<div class="movie-list" id="movieContainer">
+  <!-- Action -->
+  <div class="movie-card action">
+    <div class="poster" style="background-image: url('darkknight.jpg');"></div>
+    <p>The Dark Knight</p>
+  </div>
+  <div class="movie-card action">
+    <div class="poster" style="background-image: url('avenegers.jpeg');"></div>
+    <p>The Avengers</p>
+  </div>
+  <div class="movie-card action">
+    <div class="poster" style="background-image: url('mission.jpg');"></div>
+    <p>Mission: Impossible</p>
+  </div>
+
+  <!-- Comedy -->
+  <div class="movie-card comedy">
+    <div class="poster" style="background-image: url('hangover.jpg');"></div>
+    <p>The Hangover</p>
+  </div>
+  <div class="movie-card comedy">
+    <div class="poster" style="background-image: url('superbad.jpeg');"></div>
+    <p>Superbad</p>
+  </div>
+  <div class="movie-card comedy">
+    <div class="poster" style="background-image: url('bride.jpg');"></div>
+    <p>Bridesmaids</p>
+  </div>
+
+  <!-- Thriller -->
+  <div class="movie-card thriller">
+    <div class="poster" style="background-image: url('inception.jpg');"></div>
+    <p>Inception</p>
+  </div>
+  <div class="movie-card thriller">
+    <div class="poster" style="background-image: url('shutter.jpg');"></div>
+    <p>Shutter Island</p>
+  </div>
+  <div class="movie-card thriller">
+    <div class="poster" style="background-image: url('gone.jpg');"></div>
+    <p>Gone Girl</p>
+  </div>
+
+  <!-- Horror -->
+  <div class="movie-card horror">
+    <div class="poster" style="background-image: url('shining.jpg');"></div>
+    <p>The Shining</p>
+  </div>
+  <div class="movie-card horror">
+    <div class="poster" style="background-image: url('conjuring.jpeg');"></div>
+    <p>The Conjuring</p>
+  </div>
+  <div class="movie-card horror">
+    <div class="poster" style="background-image: url('getout.jpg');"></div>
+    <p>Get Out</p>
+  </div>
+</div>
+
+<!-- Carousel -->
+<h2>🎬 Explore More</h2>
+<div class="scroll-carousel-container">
+  <button class="scroll-btn scroll-left" onclick="scrollCarousel(-1)">&#10094;</button>
+  <div class="scroll-carousel" id="scrollCarousel">
+    <div class="carousel-item" style="background-image: url('popcorn.jpeg');"></div>
+    <div class="carousel-item" style="background-image: url('clapboard.png');"></div>
+    <div class="carousel-item" style="background-image: url('theater.jpg');"></div>
+  </div>
+  <button class="scroll-btn scroll-right" onclick="scrollCarousel(1)">&#10095;</button>
+</div>
+
+<!-- FAQ -->
+<h2>FREQUENTLY ASKED QUESTIONS</h2>
+<div class="faq-section">
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <strong>1. What is this website about?</strong>
+    <p>This website provides in-depth reviews, ratings, and analysis of movies from different genres, release periods, and countries.</p>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <strong>2. How are movies rated?</strong>
+    <p>Movies are rated based on critic and user reviews, popularity, and quality of production.</p>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <strong>3. Can I submit my own reviews?</strong>
+    <p>Yes! Create an account and start sharing your thoughts on your favorite films.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <p>Home</p>
+    <p>About us</p>
+    <p>Contact us</p>
+  </div>
+  <div>
+    <h4>Products</h4>
+    <p>TV Shows</p>
+    <p>Web Series</p>
+    <p>Hollywood</p>
+    <p>Bollywood</p>
+  </div>
+  <div>
+    <h4>Resources</h4>
+    <p>FAQs</p>
+    <p>Search Movie</p>
+  </div>
+  <div>
+    <h4>Newsletter</h4>
+    <input type="email" placeholder="Your email..." />
+    <br/>
+    <input type="checkbox" /> I agree with Privacy Policy & Terms
+    <br/>
+    <button>Send</button>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(item) {
+    item.classList.toggle("active");
+  }
+
+  function filterMovies(category) {
+    let movies = document.querySelectorAll('.movie-card');
+    movies.forEach(movie => {
+      movie.style.display = movie.classList.contains(category) ? "block" : "none";
+    });
+  }
+
+  function searchMovies() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const movies = document.querySelectorAll(".movie-card");
+    movies.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(query) ? "block" : "none";
+    });
+  }
+
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById("scrollCarousel");
+    const scrollAmount = 420;
+    carousel.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+</script>
+</body>
+</html>

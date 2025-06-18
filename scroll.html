@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FlickFinder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 24px;
+      color: #00e1ff;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    .favorite-btn {
+      background-color: #3ccfcf;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .slider {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .overlay {
+      color: white;
+      z-index: 1;
+      max-width: 700px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .overlay button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.3);
+      border: none;
+      font-size: 32px;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .nav-btn.left {
+      left: 20px;
+    }
+
+    .nav-btn.right {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Flick<span style="color: white;">Finder</span></div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Tv Show</a>
+      <a href="#">Movie</a>
+      <a href="#">Upcoming</a>
+    </nav>
+    <button class="favorite-btn">Favorite ❤</button>
+  </header>
+
+  <div class="slider" id="slider">
+    <div class="overlay">
+      <button>Discover More.</button>
+    </div>
+    <button class="nav-btn left" onclick="prevSlide()">❮</button>
+    <button class="nav-btn right" onclick="nextSlide()">❯</button>
+  </div>
+
+  <script>
+    const slider = document.getElementById('slider');
+
+    // Use reliable placeholder images for now
+    const images = [
+      "url('dragon.jpg')",
+      "url('hdragonttps://picsum.photos/id/1018/1600/900')",
+      "url('https://picsum.photos/id/1024/1600/900')"
+    ];
+
+    let index = 0;
+
+    function showSlide(i) {
+      index = (i + images.length) % images.length;
+      slider.style.backgroundImage = images[index];
+    }
+
+    function nextSlide() {
+      showSlide(index + 1);
+    }
+
+    function prevSlide() {
+      showSlide(index - 1);
+    }
+
+    showSlide(index);
+  </script>
+
+</body>
+</html>
